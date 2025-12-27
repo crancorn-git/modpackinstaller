@@ -31,7 +31,7 @@ jobs:
           name: Cranix-Windows-Installer
           path: dist/*.exe
 
-  build-mac:
+build-mac:
     runs-on: macos-latest
     steps:
       - name: Checkout Code
@@ -48,7 +48,8 @@ jobs:
 
       - name: Build Mac Executable
         run: |
-          pyinstaller --onefile --name "Cranix_Server_Installer_Mac" --add-data "Minecraft.ttf:." --collect-all customtkinter --collect-all pypresence mc_installer.py
+          # The name here MUST match the upload path below
+          pyinstaller --onefile --name "Cranix_Server_Installer_Mac.command" --add-data "Minecraft.ttf:." --collect-all customtkinter --collect-all pypresence mc_installer.py
 
       - name: Upload Mac Artifact
         uses: actions/upload-artifact@v4

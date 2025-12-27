@@ -1,0 +1,28 @@
+name: Cranix Build Pipeline
+on: [push]
+
+jobs:
+  build-mac:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          pip install requests pyinstaller
+
+      - name: Build Mac Executable
+        run: |
+          pyinstaller --onefile --name "Cranix_Installer_Mac" mc_installer.py
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Cranix-Mac-Installer
+          path: dist/Cranix_Installer_Mac

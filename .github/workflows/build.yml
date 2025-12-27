@@ -54,4 +54,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Cranix-Mac-Installer
-          path: dist/Cranix_Server_Installer_Mac
+          path: dist/Cranix_Server_Installer_Mac.command

@@ -32,26 +32,33 @@ jobs:
           path: dist/*.exe
 
   build-mac:
-    runs-on: macos-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      runs-on: macos-latest
+      steps:
+        - name: Checkout Code
+          uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+        - name: Set up Python
+          uses: actions/setup-python@v5
+          with:
+            python-version: '3.11'
 
-      - name: Install Dependencies
-        run: |
-          pip install requests pyinstaller customtkinter pypresence
+        - name: Install Dependencies
+          run: |
+            pip install requests pyinstaller customtkinter pypresence
 
-      - name: Build Mac Executable
-        run: |
-          pyinstaller --onefile --name "Cranix_Server_Installer_Mac.command" --add-data "Minecraft.ttf:." --collect-all customtkinter --collect-all pypresence mc_installer.py
+        - name: Build Mac Executable
+          run: |
+            pyinstaller --onefile --name "Cranix_Installer_Mac.command" --add-data "Minecraft.ttf:." --collect-all customtkinter --collect-all pypresence mc_installer.py
 
-      - name: Upload Mac Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Cranix-Mac-Installer
-          path: dist/Cranix_Server_Installer_Mac.command
+        - name: Fix Permissions and Zip
+          run: |
+            # This ensures the file is allowed to run as a program
+            chmod +x dist/Cranix_Installer_Mac.command
+            cd dist
+            zip ../Cranix-Mac-Installer.zip Cranix_Installer_Mac.command
+
+        - name: Upload Mac Artifact
+          uses: actions/upload-artifact@v4
+          with:
+            name: Cranix-Mac-Installer
+            path: Cranix-Mac-Installer.zip

@@ -19,14 +19,14 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install requests pyinstaller
+          pip install requests pyinstaller customtkinter pypresence
 
       - name: Build Windows EXE
         run: |
-          pyinstaller --onefile --name "Cranix Server Installer Win" mc_installer.py
+          pyinstaller --noconsole --onefile --name "Cranix Server Installer" --icon="logo.ico" --add-data "Minecraft.ttf;." --collect-all customtkinter --collect-all pypresence mc_installer.py
 
       - name: Upload Windows Artifact
-        uses: actions/upload-artifact@v4 # CHANGED TO V4
+        uses: actions/upload-artifact@v4
         with:
           name: Cranix-Windows-Installer
           path: dist/*.exe
@@ -44,14 +44,14 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install requests pyinstaller
+          pip install requests pyinstaller customtkinter pypresence
 
       - name: Build Mac Executable
         run: |
-          pyinstaller --onefile --name "Cranix_Server_Installer_Mac" mc_installer.py
+          pyinstaller --onefile --name "Cranix_Server_Installer_Mac" --add-data "Minecraft.ttf:." --collect-all customtkinter --collect-all pypresence mc_installer.py
 
       - name: Upload Mac Artifact
-        uses: actions/upload-artifact@v4 # CHANGED TO V4
+        uses: actions/upload-artifact@v4
         with:
           name: Cranix-Mac-Installer
           path: dist/Cranix_Server_Installer_Mac
